@@ -1,56 +1,47 @@
 #include "shell.h"
 
-int main(int argc __attribute__((unused)), char **argv)
+#define MAX_INPUT_SIZE 1024
+
+int main(void)
 {
-	appData_t *appData = NULL;
-	int cLoop;
-	void (*func)(appData_t *);
+	char input[MAX_INPUT_SIZE];
+	pid_t pid;
 
-	appData = _initData(argv);
-
-	do {
-		signal(SIGINT, _ctrlC);
-		_prompt();
-		_getline(appData);
-
-		appData->history = _strtow(appData->buffer, COMMAND_SEPARATOR, ESCAPE_SEPARATOR);
-		if (appData->history == NULL)
-		{
-			_freeAppData(appData);
-			free(appData);
-			continue;
-		}
-		for (cLoop = 0; appData->history[cLoop] != NULL; cLoop++)
-		{
-			appData->arguments = _strtow(appData->history[cLoop], SEPARATORS, ESCAPE_SEPARATOR);
-
-			if (appData->arguments == NULL)
-			{
-				_freeAppData(appData);
-				_freeEnvList(appData->env);
-				appData->env = NULL;
-				free(appData);
-				appData = NULL;
-				break;
-			}
-			appData->commandName = _strdup(appData->arguments[0]);
-			if (appData->commandName != NULL)
-			{
-				func = _getCustomFunction(appData->commandName);
-				if (func != NULL)
-					func(appData);
-				else
-					_execCommand(appData);
-			}
-			_freeCharDoublePointer(appData->arguments);
-			appData->arguments = NULL;
-			free(appData->commandName);
-			appData->commandName = NULL;
-		}
-		_freeAppData(appData);
-	}
 	while (1)
 	{
-		return (EXIT_SUCCESS);
+		printf("simple_shell$ ");
+		if (fgets(input, sizeof(input), stdin) == NULL)
+		{
+			printf("\n");
+			break;
+		}
+		input[strlen(input) - 1] = '\0';
+		pid = fork();
+
+		if (pid == -1)
+		{
+			perror("fork");
+		}
+		else if (pid == 0)
+		{
+			execlp(input, input, NULL);
+			perror("execlp");
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			int status;
+			waitpid(pid, &status, 0);
+
+			if (WIFEXITED(status))
+			{
+				printf("Child process exited with status %d\n", WEXITSTATUS(status));
+			}
+			else if (WIFSIGNALED(status))
+			{
+				printf("Child process terminated by signal %d\n", WTERMSIG(status));
+			}
+		}
 	}
+	return (0);
 }
