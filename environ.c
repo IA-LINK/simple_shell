@@ -4,21 +4,6 @@
 #define MAX_COMMAND_LENGTH 100
 
 /**
- * printEnvironment - Print the current environment variables
- *
- * This function iterates through the environment variables and prints them.
- */
-void printEnvironment(void)
-{
-	extern char **environ;
-
-	for (char **env = environ; *env != NULL; env++)
-	{
-		printf("%s\n", *env);
-	}
-}
-
-/**
  * main - Simple shell with 'env' built-in command
  *
  * This program provides a simple shell that allows users to run commands
@@ -26,7 +11,7 @@ void printEnvironment(void)
  *
  * Return: Always 0
  */
-int main(void)
+void printEnvironment(void)
 {
 	char input[MAX_COMMAND_LENGTH];
 
@@ -67,6 +52,6 @@ int main(void)
 		{
 			wait(NULL);
 		}
-		return (0);
+		return;
 	}
 }
