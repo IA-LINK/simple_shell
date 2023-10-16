@@ -1,7 +1,5 @@
 #include "shell.h"
 
-#define MAX_INPUT_SIZE 1024
-
 int main(void)
 {
 	char input[MAX_INPUT_SIZE];
