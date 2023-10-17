@@ -15,7 +15,7 @@
 
 extern char **environ;
 
-int _strcmp(char *str1, char *str2);
+int _strcmp(const char *str3, const char *str4);
 int verify_path(char **arguments);
 char *_strdup(char *str);
 char *append_command(char *dir_path, char *command);
