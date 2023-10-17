@@ -15,7 +15,7 @@
 
 extern char **environ;
 
-int _strcmp(const char *str3, const char *str4);
+int strcmp(const char *str3, const char *str4);
 int verify_path(char **arguments);
 char *_strdup(char *str);
 char *append_command(char *dir_path, char *command);
@@ -24,7 +24,7 @@ int fill_args(char *entry, char **arguments);
 int print_numbers(int n);
 int custom_strlen(const char *string);
 int print_not_found(char **arguments, int counter);
-char *_getenv(char *global_var);
+char *_getenv(const char *name);
 int _printp(const char *prompt, unsigned int size);
 int _putchar(char c);
 int exist(char *pathname);
