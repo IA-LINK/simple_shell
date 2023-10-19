@@ -1,45 +1,46 @@
 #include "shell.h"
-
+/**
+ * main - Entry point to the program
+ * the function implements loop to wait for user
+ * imput.
+ * Return: Always return 0
+ */
 int main(void)
 {
-	char input[MAX_INPUT_SIZE];
-	pid_t pid;
+	char *user_input = NULL;
+	size_t user_input_size = 0;
+	ssize_t read_size;
 
 	while (1)
 	{
-		printf("simple_shell$ ");
-		if (fgets(input, sizeof(input), stdin) == NULL)
+		_prompt_display();/* function that display  */
+		read_size = getline(&user_input, &user_input_size, stdin);
+		if (read_size == -1)
 		{
-			printf("\n");
-			break;
+			free(user_input);
+			return (0); /* kill the loop and move on.. */
 		}
-		input[strlen(input) - 1] = '\0';
-		pid = fork();
-
-		if (pid == -1)
+		if (user_input[read_size - 1] == '\n')
+			user_input[read_size - 1] = '\0';
+		if (strncmp(user_input, "exit", 4) == 0)/* checking if user enter exit*/
 		{
-			perror("fork");
+			free(user_input);
+			user_input = NULL;
+			user_input_size = 0;
+			exit(EXIT_SUCCESS);
 		}
-		else if (pid == 0)
+		if (strcmp(_strtrim(user_input), "env") == 0)/* handling evn */
 		{
-			execlp(input, input, NULL);
-			perror("execlp");
-			exit(EXIT_FAILURE);
+			print_env();
+			continue;
 		}
-		else
+		if (read_size > 1)
 		{
-			int status;
-			waitpid(pid, &status, 0);
-
-			if (WIFEXITED(status))
-			{
-				printf("Child process exited with status %d\n", WEXITSTATUS(status));
-			}
-			else if (WIFSIGNALED(status))
-			{
-				printf("Child process terminated by signal %d\n", WTERMSIG(status));
-			}
+			char output = _execommand(_strtrim(user_input));
+			if (output == -1)
+				break;
 		}
 	}
+	free(user_input);
 	return (0);
 }

@@ -1,5 +1,5 @@
 /**
- * _strcpy - copies the string pointed to by src
+ * *my_strcpy - copies the string pointed to by src
  * including the terminating null byte \0
  * to the buffer pointed to by dest
  * @dest: pointer to the buffer in which we copy the string
@@ -7,9 +7,9 @@
  *
  * Return: the pointer to dest
  */
-char *_strcpy(char *dest, char *src)
+char *my_strcpy(char *dest, char *src)
 {
-	int length, k;
+	int length, j;
 
 	length = 0;
 
@@ -18,11 +18,11 @@ char *_strcpy(char *dest, char *src)
 		length++;
 	}
 
-	for (k = 0; k < length; k++)
+	for (j = 0; j < length; j++)
 	{
-		dest[k] = src[k];
+		dest[j] = src[j];
 	}
-	dest[k] = '\0';
+	dest[j] = '\0';
 
 	return (dest);
 }

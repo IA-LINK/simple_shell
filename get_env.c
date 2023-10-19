@@ -1,25 +1,26 @@
 #include "shell.h"
+
 /**
- * _getenv - the get env function get the value of environment
- * @name: the name of the enviorment variable
- * Return: A pointer will be return
+ * get_env - the get env function gets the value of an environment variable
+ * @name: the name of the environment variable
+ * Return: A pointer will be returned
  */
-char *_getenv(const char *name)
+char *my_getenv(const char *name)
 {
-	int l, len;
+	int i, len;
 	char **env;
 	char *value;
 
 	if (!name)
 		return (NULL);
 	env = environ;
-	for (l = 0; env[l]; l++)
+	for (i = 0; env[i]; i++)
 	{
-		for (len = 0; env[l][len] != '='; len++)
+		for (len = 0; env[i][len] != '='; len++)
 			;
-		if (strncmp(name, env[l], len) == 0)
+		if (strncmp(name, env[i], len) == 0)
 		{
-			value = &env[l][len + 1];
+			value = &env[i][len + 1];
 			return (value);
 		}
 	}

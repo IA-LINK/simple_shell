@@ -5,9 +5,9 @@
  * @command: command from user input
  * Return: Return NULL
  */
-char *get_path(char *command)
+char *_getpath(const char *command)
 {
-	char *comp_path, *path, *path_env = _getenv("PATH");
+	char *comp_path, *path, *path_env = getenv("PATH");
 	size_t path_len, comp_path_len, command_len;
 
 	if (path_env == NULL)

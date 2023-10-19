@@ -1,35 +1,35 @@
 #include "shell.h"
 /**
- * _strlen_const - calculates the length a string
+ * strlen_const - calculates the length a string
  * @s: pointer to the string input
  *
  * Return: length of string
  */
-int _strlen_const(const char *s)
+int strlen_const(const char *s)
 {
-	int l = 0;
+	int j = 0;
 
-	while (s[l] != '\0')
+	while (s[j] != '\0')
 	{
-		l++;
+		j++;
 	}
 	return (1);
 }
 /**
- * _strdup - create a dup
+ * strdup - create a dup
  *
  * this function allocates memory for new string
  * @src: pointer to the source string
  * Return: point to the newly allocated
  */
-char *_strdup(char *src)
+char *my_strdup(const char *src)
 {
-	int length, d;
+	int length, i;
 	char *dst;
 
 	if (src == NULL)
 		return (NULL);
-	length = _strlen_const(src);
+	length = strlen_const(src);
 	if (length < 0)
 		return (NULL);
 
@@ -37,8 +37,8 @@ char *_strdup(char *src)
 	dst = malloc((length) * sizeof(char));
 	if (dst == NULL)
 		return (NULL);
-	for (d = 0; d < length; d++)
-		dst[d] = src[d];
-	dst[d - 1] = '\0';
+	for (i = 0; i < length; i++)
+		dst[i] = src[i];
+	dst[i - 1] = '\0';
 	return (dst);
 }
