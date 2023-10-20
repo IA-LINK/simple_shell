@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
+
 #define MAX_INPUT_LEN 1024
 extern char **environ;
 void _prompt_display(void);
@@ -28,4 +29,8 @@ char *my_getenv(const char *name);
 int _execommand(char *command_with_args);
 void _execute_childprocess(char *command, char *args[]);
 void print_env(void);
+char *custom_getline(void);
+void *_re_alloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_mem_set(char *s, char b, unsigned int n);
+void _ffree(char **pp);
 #endif /* SHELL_H */
