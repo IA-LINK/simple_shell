@@ -33,4 +33,9 @@ char *custom_getline(void);
 void *_re_alloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_mem_set(char *s, char b, unsigned int n);
 void _ffree(char **pp);
+char *_str_cat(char *dest, char *src);
+int _str_len(char *s);
+int _str_cmp(char *s1, char *s2);
+char *_starts_with(const char *haystack, const char *needle);
+char *_str_cat(char *dest, char *src);
 #endif /* SHELL_H */
